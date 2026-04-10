@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login / Register - Galaxy Book Store</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .tabs {
+            display: flex;
+            margin-bottom: 20px;
+            border-bottom: 1px solid var(--glass-border);
+        }
+        .tab {
+            flex: 1;
+            padding: 10px;
+            cursor: pointer;
+            color: var(--text-muted);
+            transition: color 0.3s ease, border-bottom 0.3s ease;
+        }
+        .tab.active {
+            color: var(--text-main);
+            border-bottom: 2px solid var(--primary);
+        }
+        .form-section {
+            display: none;
+        }
+        .form-section.active {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <div class="logo-section">
+        <h1>Galaxy Book Store</h1>
+    </div>
+</header>
+
+<div class="auth-container">
+    <div class="auth-card">
+        <div class="tabs">
+            <div class="tab active" id="tab-login" onclick="switchTab('login')">Login</div>
+            <div class="tab" id="tab-register" onclick="switchTab('register')">Register</div>
+        </div>
+
+        <!-- Login Form -->
+        <div id="form-login" class="form-section active">
+            <h2>Welcome Back</h2>
+            <div class="input-group">
+                <label>Username</label>
+                <input type="text" id="login-username" placeholder="Enter Username">
+            </div>
+            <div class="input-group">
+                <label>Password</label>
+                <input type="password" id="login-password" placeholder="Enter Password">
+            </div>
+            <button class="btn" onclick="login()" style="width: 100%">Login</button>
+        </div>
+
+        <!-- Register Form -->
+        <div id="form-register" class="form-section">
+            <h2>Create Account</h2>
+            <div class="input-group">
+                <label>Username</label>
+                <input type="text" id="reg-username" placeholder="Choose a Username">
+            </div>
+            <div class="input-group">
+                <label>Password</label>
+                <input type="password" id="reg-password" placeholder="Choose a Password">
+            </div>
+            <button class="btn" onclick="register()" style="width: 100%">Register</button>
+        </div>
+
+    </div>
+</div>
+
+<script src="script.js"></script>
+<script>
+    function switchTab(tab) {
+        document.getElementById('tab-login').classList.remove('active');
+        document.getElementById('tab-register').classList.remove('active');
+        document.getElementById('form-login').classList.remove('active');
+        document.getElementById('form-register').classList.remove('active');
+
+        document.getElementById('tab-' + tab).classList.add('active');
+        document.getElementById('form-' + tab).classList.add('active');
+    }
+</script>
+
+</body>
+</html>

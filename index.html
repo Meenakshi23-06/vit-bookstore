@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Galaxy Book Store - Home</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header>
+    <div class="logo-section">
+        <img src="vitlogo.png" alt="VIT-AP Logo" style="height: 60px; auto; border-radius: 8px; margin-right: 15px;">
+        <h1>Galaxy Bookstore</h1>
+    </div>
+</header>
+
+<div style="text-align: center; padding: 40px;">
+    <h2>Select Your Genre</h2>
+    <p style="color: var(--text-muted); margin-top: 10px;">Explore our vast collection of books.</p>
+</div>
+
+<div class="container">
+    <div class="card b">
+        <h2>Personality Development</h2>
+        <a href="#" onclick="openPage('personality.html')" class="btn">View Books</a>
+    </div>
+
+    <div class="card astronamy-page">
+        <h2>Astronomy</h2>
+        <a href="#" onclick="openPage('astronamy.html')" class="btn">View Books</a>
+    </div>
+
+    <div class="card c">
+        <h2>Novels</h2>
+        <a href="#" onclick="openPage('novels.html')" class="btn">View Books</a>
+    </div>
+</div>
+
+<footer style="margin-top: 50px;">
+    <p>© 2026 VIT-AP CSE | Created by Meenakshi</p>
+</footer>
+
+<script src="script.js"></script>
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+        // Will append greeting, my books, admin dashboard link if logged in
+        renderNav();
+    });
+
+    function openPage(page) {
+        if (!checkUser()) return;
+        window.location.href = page;
+    }
+</script>
+
+</body>
+</html>

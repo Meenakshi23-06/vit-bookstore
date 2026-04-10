@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - Graph</title>
+    <link rel="stylesheet" href="style.css">
+    
+    <!-- Load vis-network -->
+    <script type="text/javascript" src="https://unpkg.com/vis-network/standalone/umd/vis-network.min.js"></script>
+</head>
+<body>
+
+<header>
+    <div class="logo-section">
+        <h1>Admin Dashboard</h1>
+    </div>
+    <div class="nav-links">
+        <a href="index.html">Back to Home</a>
+    </div>
+</header>
+
+<div style="padding: 40px; text-align: center;">
+    <h2>Neo4j Database Relationship Graph</h2>
+    <p style="color: var(--text-muted); margin-top: 10px; margin-bottom: 30px;">
+        Visualizing User and Book nodes, and their OWNS relationships. Pink nodes are Users, Blue nodes are Books.
+    </p>
+
+    <div id="network-graph"></div>
+</div>
+
+<script src="script.js"></script>
+<script>
+    // Only allow 'meena' to access the admin page
+    const user = checkUser();
+    if (user !== "meena") {
+        alert("Access Denied: Admin privileges required.");
+        window.location.href = "index.html";
+    } else {
+        document.addEventListener("DOMContentLoaded", () => {
+            const API_URL = window.location.protocol === "file:" || window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1" 
+                ? "http://localhost:5001" 
+                : "";
+            
+            fetch(`${API_URL}/admin/graph`)
+            .then(res => res.json())
+            .then(data => {
+                if (data.success && data.nodes) {
+                    const container = document.getElementById('network-graph');
+                    
+                    const nodesFormat = data.nodes.map(n => ({
+                        id: n.id,
+                        label: n.label,
+                        color: n.group === 'users' ? '#ec4899' : '#6366f1',
+                        shape: 'dot',
+                        size: 25,
+                        font: { color: '#ffffff', face: 'Inter' }
+                    }));
+
+                    const dataNetwork = {
+                        nodes: new vis.DataSet(nodesFormat),
+                        edges: new vis.DataSet(data.edges)
+                    };
+
+                    const options = {
+                        edges: {
+                            arrows: 'to',
+                            color: { inherit: false, color: '#94a3b8' },
+                            font: { color: '#ffffff', strokeWidth: 0, align: 'horizontal' },
+                            smooth: true
+                        },
+                        physics: {
+                            solver: 'forceAtlas2Based',
+                            forceAtlas2Based: {
+                                gravitationalConstant: -100,
+                                centralGravity: 0.01,
+                                springLength: 200,
+                                springConstant: 0.08
+                            }
+                        }
+                    };
+
+                    const network = new vis.Network(container, dataNetwork, options);
+                } else {
+                    document.getElementById('network-graph').innerHTML = "Could not load graph data. Make sure backend is running.";
+                }
+            })
+            .catch(err => {
+                console.error(err);
+                document.getElementById('network-graph').innerHTML = "<p style='padding:20px; color: red;'>Make sure the database and backend are running to view graph.</p>";
+            });
+        });
+    }
+</script>
+
+</body>
+</html>

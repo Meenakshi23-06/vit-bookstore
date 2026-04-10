@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Books - Galaxy Book Store</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header>
+    <div class="logo-section">
+        <h1>My Collection</h1>
+    </div>
+    <div class="nav-links">
+        <a href="index.html">Back to Home</a>
+        <a href="admin.html">Admin Dashboard</a>
+        <button class="btn" style="padding: 5px 15px;" onclick="logout()">Logout</button>
+    </div>
+</header>
+
+<div style="padding: 40px; text-align: center;">
+    <h2>Books you've added to your collection</h2>
+</div>
+
+<div class="container" id="my-books-container">
+    <p>Loading...</p>
+</div>
+
+<script src="script.js"></script>
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+        loadMyBooks();
+    });
+</script>
+
+</body>
+</html>
