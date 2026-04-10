@@ -1,4 +1,4 @@
-const { driver, session } = require("./db");
+const { driver } = require("./db");
 
 const booksToSeed = [
   // Astronomy
@@ -19,6 +19,8 @@ const booksToSeed = [
 
 async function seedDatabase() {
   console.log("Seeding database...");
+  const session = driver.session();
+  
   try {
     // Clear out old nodes just in case to start fresh
     await session.run("MATCH (n:Book) DETACH DELETE n");
